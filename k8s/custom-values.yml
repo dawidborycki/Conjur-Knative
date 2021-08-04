@@ -1,0 +1,22 @@
+rbac:
+  create: true
+  serviceAccount:
+    name: test-app-secure-sa
+
+secretsProvider:
+  image: cyberark/secrets-provider-for-k8s
+  tag: 1.1.4
+  imagePullPolicy: IfNotPresent
+  name: secretless
+
+environment:
+  k8sSecrets: [knative-secrets]
+  debug: false
+  conjur:
+    account: default
+    applianceUrl: https://conjur-cluster-conjur-oss.conjur-server.svc.cluster.local
+    authnUrl: https://conjur-cluster-conjur-oss.conjur-server.svc.cluster.local/authn-k8s/dev
+    authnLogin:  host/conjur/authn-k8s/dev/apps/service-account-based-app
+    sslCertificate:
+      name: cert-config-map
+      value: ""

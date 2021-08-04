@@ -1,0 +1,16 @@
+- !policy
+  id: app/testapp
+  owner: !group kube_admin
+  annotations:
+    description: This policy contains the credentials
+
+  body:
+    - &variables
+      - !variable secret/optionsSecret
+
+    - !layer layer
+
+    - !permit
+      resource: *variables
+      privileges: [ read, execute ]
+      roles: !layer layer
